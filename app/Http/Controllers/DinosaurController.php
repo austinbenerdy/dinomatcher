@@ -14,7 +14,7 @@ class DinosaurController extends Controller
      */
     public function index()
     {
-        return response('Hello World','200');
+        return response(Dinosaur::all(),'200');
     }
 
     /**
