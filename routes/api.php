@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SmartSuggestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DinosaurController;
@@ -19,9 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('dinosaur', [DinosaurController::class, 'index']);
-Route::post('dinosaur', [DinosaurController::class, 'store']);
-Route::get('dinosaur/{1}', [DinosaurController::class, 'show']);
+
+Route::post('dinosaur/match', [SmartSuggestionController::class, 'smartSuggestion']);
+Route::get('dinosaur/getmatch', [SmartSuggestionController::class, 'getSmartSuggestion']);
+
+Route::get('hello/there', [SmartSuggestionController::class, 'index']);
+
+Route::resource('dinosaur', DinosaurController::class);
 
 
-Route::post('dinosaur/match', [DinosaurController::class, 'smartSuggestion']);
+
