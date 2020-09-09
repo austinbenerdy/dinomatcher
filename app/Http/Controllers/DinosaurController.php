@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dinosaur;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DinosaurController extends Controller
 {
@@ -17,15 +19,6 @@ class DinosaurController extends Controller
         return response(Dinosaur::all(),'200');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +28,12 @@ class DinosaurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dino = new Dinosaur([
+            'name' => $request->get('name'),
+            'imgUrl' => $request->get('image'),
+            ]);
+        $dino->save();
+        return response($dino->toArray(), 200);
     }
 
     /**
@@ -81,5 +79,31 @@ class DinosaurController extends Controller
     public function destroy(Dinosaur $dinosaur)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function smartSuggestion(Request $request)
+    {
+        $name = $request->get('name');
+        $color = $request->get('color');
+
+        $nameLength = strlen($name);
+
+        if ($color === 'green') {
+            $dino = Dinosaur::find(1);
+        } else if ($nameLength > 30) {
+            $dino = Dinosaur::find(2);
+        } else if ($nameLength > 15 && $nameLength < 20 && in_array(['brown', 'yellow', 'orange'], $color)) {
+            $dino = Dinosaur::find(3);
+        } else if ($nameLength > 10 && $nameLength < 20 && in_array(['red', 'blue', 'pink'], $color)) {
+            $dino = Dinosaur::find(5);
+        } else {
+            $dino = Dinosaur::find(4);
+        }
+
+        return response($dino, 200);
     }
 }

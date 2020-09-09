@@ -20,3 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('dinosaur', [DinosaurController::class, 'index']);
+Route::post('dinosaur', [DinosaurController::class, 'store']);
+Route::get('dinosaur/{1}', [DinosaurController::class, 'show']);
+
+
+Route::post('dinosaur/match', [DinosaurController::class, 'smartSuggestion']);
