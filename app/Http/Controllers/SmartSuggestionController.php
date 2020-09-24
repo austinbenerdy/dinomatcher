@@ -56,6 +56,7 @@ class SmartSuggestionController extends Controller
      */
     private  function getMatch(string $name, string $color): Dinosaur
     {
+        $color = mb_strtolower($color);
         $nameLength = strlen($name);
 
         if ($color === 'green') {
