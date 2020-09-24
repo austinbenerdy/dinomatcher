@@ -49,6 +49,11 @@ class SmartSuggestionController extends Controller
         return response($dino, 200);
     }
 
+    /**
+     * @param string $name
+     * @param string $color
+     * @return Dinosaur
+     */
     private  function getMatch(string $name, string $color): Dinosaur
     {
         $nameLength = strlen($name);
